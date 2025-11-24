@@ -2,10 +2,10 @@ import { StyleSheet } from 'react-native';
 
 export const globalStyles = StyleSheet.create({
     backgroundColor:{
-        backgroundColor: '#1C2342',
+        backgroundColor: '#06223B',
     },
     container:{
-        backgroundColor: '#1C2342',
+        backgroundColor: '#06223B',
         flex: 1,
         justifyContent: 'center',
         padding: 40,
@@ -20,13 +20,14 @@ export const globalStyles = StyleSheet.create({
         marginBottom: 20
     },
     lightText: {
-        color: '#A4A6AC',
+        color: '#B4BECA',
         fontSize: 16
     },
     mainBtn: {
-        backgroundColor: '#5171A5',
-        paddingVertical: 10,
-        paddingHorizontal: 30,
-        color: 'white'
+        backgroundColor: '#255A8B',
+        maxWidth: 120,
+        paddingVertical: 6,
+        paddingHorizontal: 16,
+        borderRadius: 15,
     }
 });

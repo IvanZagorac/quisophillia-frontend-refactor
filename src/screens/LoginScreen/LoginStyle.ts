@@ -13,10 +13,12 @@ export const loginStyles = StyleSheet.create({
     },
     loginBtn: {
         marginTop: 40,
+        backgroundColor: '#255A8B'
     },
     input: {
         borderBottomWidth: 1,
-        borderBottomColor: '#06D3F6',
+        borderBottomColor: '#207179',
+        color: 'white',
         paddingBottom: 10,
         marginBottom: 20,
     },
@@ -32,7 +34,6 @@ export const loginStyles = StyleSheet.create({
     registerText: {
         marginLeft: 10,
         color: '#06D3F6',
-        fontWeight: 'bold',
     },
     logoWrapper: {
         flex:1,

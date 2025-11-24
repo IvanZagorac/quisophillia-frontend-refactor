@@ -1,4 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { jwtDecode}  from 'jwt-decode';
+type DecodedToken = {
+    userId?: string;
+    email?: string;
+    exp?: number;
+    [key: string]: any;
+  };
+
 export const saveToken = async (token: string, type: 'refresh' | 'token') => 
 {
     try 
@@ -35,6 +43,29 @@ export const getToken = async (type: 'refresh' | 'token') =>
     catch (error) 
     {
         console.error('Error getting token:', error);
+    }
+};
+
+export const getDecodedRefreshToken = async (type: 'refresh' | 'token'): Promise<DecodedToken | null> => 
+{
+    try 
+    {
+        const token = await getToken(type)
+
+  
+        if (!token) 
+        {
+            console.warn('No token found');
+            return null;
+        }
+  
+        const decoded: DecodedToken = jwtDecode(token);
+        return decoded;
+    }
+    catch (error) 
+    {
+        console.error('Failed to decode refresh token:', error);
+        return null;
     }
 };
       

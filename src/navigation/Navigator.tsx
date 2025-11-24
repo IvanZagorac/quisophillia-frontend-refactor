@@ -4,14 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
 import { globalStyles } from '../styles/globalStyles';
-import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import { navigationRef } from '../../components/Navigation';
-
-type RootStackParamList = {
-  Login: undefined;
-  Register: undefined;
-  Home: undefined;
-};
+import QuizList from '../screens/HomeScreen/HomeScreen';
+import CreateQuizScreen from '../screens/CreateQuizScreen/CreateQuizScreen';
+import { RootStackParamList } from '../types/RootStackParamList';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -24,7 +20,8 @@ const AppNavigator = () =>
                 initialRouteName="Login">
                 <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
                 <Stack.Screen name="Register" component={RegisterScreen} />
-                <Stack.Screen name="Home" component={HomeScreen}/>
+                <Stack.Screen name="Home" component={QuizList}  options={{ headerShown: false }} />
+                <Stack.Screen name="CreateQuiz" component={CreateQuizScreen}/>
             </Stack.Navigator>
         </NavigationContainer>
     );

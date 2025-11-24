@@ -1,7 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import AppNavigator from './src/navigation/Navigator';
 import { useFonts } from 'expo-font';
+import { Provider } from 'react-redux';
 import AppLoading from './components/AppLoading'; 
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { store } from './src/store/store';
 
 
 export default function App() 
@@ -21,8 +25,14 @@ export default function App()
 
     return (
         <>
-            <AppNavigator />
-            <StatusBar style="auto" />
+            <Provider store={store}>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                    <SafeAreaProvider>
+                        <AppNavigator />
+                        <StatusBar style="auto" />
+                    </SafeAreaProvider>
+                </GestureHandlerRootView>
+            </Provider>
         </>
     );
 }

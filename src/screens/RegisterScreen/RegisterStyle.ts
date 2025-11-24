@@ -16,9 +16,11 @@ export const registerStyles = StyleSheet.create({
     },
     input: {
         borderBottomWidth: 1,
-        borderBottomColor: '#06D3F6',
+        color: 'white',
+        borderBottomColor: '#207179',
         paddingBottom: 10,
         marginBottom: 20,
+        flex: 1,
     },
     error: {
         color: 'red',
@@ -34,6 +36,12 @@ export const registerStyles = StyleSheet.create({
         color: '#06D3F6',
         fontWeight: 'bold',
     },
+    eyeIcon: {
+        position: 'absolute',
+        right: 10,
+        bottom: 20
+        
+    },
     logoWrapper: {
         flex:1,
         justifyContent: 'center',
@@ -43,9 +51,14 @@ export const registerStyles = StyleSheet.create({
     picker: {
         height: 50,
         width: '100%',
+        color: 'white',
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 5,
+    },
+    passwordContainer: {
+        position: 'relative',
+        justifyContent: 'center',
     },
 
 });

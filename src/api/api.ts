@@ -22,7 +22,7 @@ export default async function api(
     {
         params = multipart ? body : JSON.stringify(body)
     }
-    console.log(contentType);
+     
     const requestData: AxiosRequestConfig = {
         method,
         baseURL: config.url,
@@ -35,7 +35,7 @@ export default async function api(
     };
     try 
     {
-        console.log(requestData);
+        
         const response = await axios(requestData);
         if (response.data.error)
         {
@@ -46,6 +46,8 @@ export default async function api(
     catch (err: any) 
     {
         // there role
+        console.log(err)
+        console.log(requestData);
         return handleApiError(err, requestData);
     }
 }
@@ -66,7 +68,6 @@ async function handleApiError(
     // role: "user" | "administrator"
 ): Promise<ApiResponse> 
 {
-    console.log(err);
     if (err?.status === 401) 
     {
     // ROLE OVDJE
@@ -80,11 +81,12 @@ async function handleApiError(
 
         // Save new token & retry request
         saveToken(newRefreshToken, 'refresh');
-    requestData.headers!.Authorization = newRefreshToken;
+        requestData.headers!.Authorization = newRefreshToken;
 
-    return await repeatRequest(requestData);
+        return await repeatRequest(requestData);
     }
 
+    console.log(err);
     return {
         status: 'error',
         data: err.data?.message || 'Internal error',
