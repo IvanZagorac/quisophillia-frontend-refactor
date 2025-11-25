@@ -1,4 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { jwtDecode}  from 'jwt-decode';
 type DecodedToken = {
     userId?: string;
@@ -7,84 +6,65 @@ type DecodedToken = {
     [key: string]: any;
   };
 
-export const saveToken = async (token: string, type: 'refresh' | 'token') => 
+export const saveToken = (token: string, type: 'refresh' | 'token') =>
 {
-    try 
+    try
     {
-        if (type === 'refresh')
-        {
-            await AsyncStorage.setItem('refreshAuthToken', token);
-        }
-        else
-        {
-            await AsyncStorage.setItem('authToken', token);
-        }
-        
+        const key = type === 'refresh' ? 'refreshAuthToken' : 'authToken';
+        localStorage.setItem(key, token);
     }
-    catch (error) 
+    catch (error)
     {
         console.error('Error saving token:', error);
     }
 };
-      
-export const getToken = async (type: 'refresh' | 'token') => 
+
+export const getToken = (type: 'refresh' | 'token') =>
 {
-    try 
+    try
     {
-        if (type === 'refresh')
-        {
-            return await AsyncStorage.getItem('refreshAuthToken');
-        }
-        else
-        {
-            return await AsyncStorage.getItem('authToken');
-        }
+        const key = type === 'refresh' ? 'refreshAuthToken' : 'authToken';
+        return localStorage.getItem(key);
     }
-    catch (error) 
+    catch (error)
     {
         console.error('Error getting token:', error);
+        return null;
     }
 };
 
-export const getDecodedRefreshToken = async (type: 'refresh' | 'token'): Promise<DecodedToken | null> => 
+export const getDecodedRefreshToken = (type: 'refresh' | 'token'): DecodedToken | null =>
 {
-    try 
+    try
     {
-        const token = await getToken(type)
+        const token = getToken(type)
 
-  
-        if (!token) 
+        if (!token)
         {
             console.warn('No token found');
             return null;
         }
-  
+
         const decoded: DecodedToken = jwtDecode(token);
         return decoded;
     }
-    catch (error) 
+    catch (error)
     {
         console.error('Failed to decode refresh token:', error);
         return null;
     }
 };
-      
-export const removeToken = async (type: 'refresh' | 'token') => 
+
+export const removeToken = (type: 'refresh' | 'token') =>
 {
-    try 
+    try
     {
-        if (type === 'refresh')
-        {
-            return await AsyncStorage.removeItem('refreshAuthToken');
-        }
-        else
-        {
-            return await AsyncStorage.removeItem('authToken');
-        }
-        
+        const key = type === 'refresh' ? 'refreshAuthToken' : 'authToken';
+        localStorage.removeItem(key);
     }
-    catch (error) 
+    catch (error)
     {
         console.error('Error removing token:', error);
     }
 };
+

@@ -1,21 +1,20 @@
-import { StyleSheet } from 'react-native';
-export const footerStyles = StyleSheet.create({
-    footer: {
-        color: '#F5F5F5',
-        paddingTop: 35,
-        paddingBottom: 35,
-        borderWidth: 1,
-        borderColor: '#2B496C',
-        paddingLeft: 40,
-        paddingRight: 40,
-        borderTopRightRadius: 25,
-        borderTopLeftRadius: 25,
-        backgroundColor: '#0B2541',
-    },
-    iconContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-    }
-})
+import styled from 'styled-components';
+
+export const FooterContainer = styled.footer`
+    color: #F5F5F5;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    border: 1px solid #2B496C;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
+    background-color: #0B2541;
+    padding-left: 40px;
+    padding-right: 40px;
+`;
+
+export const IconContainer = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+`;

@@ -1,32 +1,47 @@
 import React from 'react';
-import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import styled, { keyframes } from 'styled-components';
+
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const Container = styled.div`
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: #fff;
+`;
+
+const Spinner = styled.div`
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #5171A5;
+    animation: ${spin} 1s ease-in-out infinite;
+`;
+
+const LoadingText = styled.p`
+    margin-top: 20px;
+    font-size: 16px;
+    color: #333;
+`;
 
 interface AppLoadingProps {
-  loadingText?: string; // Optional prop to display loading text
+  loadingText?: string;
 }
 
-const AppLoading: React.FC<AppLoadingProps> = ({ loadingText }) => 
-{
+const AppLoading: React.FC<AppLoadingProps> = ({ loadingText }) => {
     return (
-        <View style={styles.container}>
-            <ActivityIndicator color="#5171A5" />
-            {loadingText && <Text style={styles.loadingText}>{loadingText}</Text>}
-        </View>
+        <Container>
+            <Spinner />
+            {loadingText && <LoadingText>{loadingText}</LoadingText>}
+        </Container>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#fff', // Optional: Change background color
-    },
-    loadingText: {
-        marginTop: 20,
-        fontSize: 16,
-        color: '#333',
-    },
-});
-
 export default AppLoading;
+

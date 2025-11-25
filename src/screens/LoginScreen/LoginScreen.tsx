@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
-// eslint-disable-next-line max-len
-import { View, Text, TextInput, Button, Image, Alert, KeyboardAvoidingView, Platform, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import { loginStyles } from './LoginStyle';
-import { globalStyles } from '../../styles/globalStyles';
+import { useNavigate } from 'react-router-dom';
+import { LoginContainer, Title, LoginButtonWrapper, Input, ErrorText, RegisterContainer, RegisterText, LogoWrapper } from './LoginStyle';
+// import { globalStyles } from '../../styles/globalStyles'; // No longer needed directly here for styling
 import api from '../../api/api';
 import { saveToken } from '../../api/authUtils';
-import { navigate } from '../../../components/Navigation';
 
 const LoginScreen = () =>
 {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<string>('');
-    const doLogin = async () => 
+    const navigate = useNavigate();
+
+    const doLogin = async () =>
     {
-        try 
+        try
         {
             const response = await api(
                 'auth/login',
@@ -23,78 +23,65 @@ const LoginScreen = () =>
             );
             if (response.status === 'error')
             {
-                setErrors(response.data)
-                
+                setErrors(response.data);
                 return;
             }
             await saveToken(response.data.data.accessToken, 'token');
             await saveToken(response.data.data.refreshToken, 'refresh');
-            navigate('Home')
+            navigate('/home');
 
             setErrors('');
-      
-            Alert.alert('Login Successful!', 'You are now logged in.');
+
+            alert('Login Successful! You are now logged in.');
         }
-        catch (e) 
+        catch (e)
         {
-            console.log(e);
+            console.error(e);
+            alert('An error occurred during login.');
         }
     };
 
     return (
-        <KeyboardAvoidingView 
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-            style={{ flex: 1 }}
-        >
-            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-                <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
-                    <View style={globalStyles.container}>
-                        <View style={loginStyles.logoWrapper}>
-                            <Image
-                                source={require('../../../assets/images/quizophilia-high-resolution-logo-white-transparent.png')}
-                                style={{ width: 250, height: 157 }}
-                            />
-                        </View>
+        <LoginContainer>
+            <LogoWrapper>
+                <img
+                    src="/assets/images/quizophilia-high-resolution-logo-white-transparent.png"
+                    alt="Quizophilia Logo"
+                    style={{ width: 250, height: 157 }}
+                />
+            </LogoWrapper>
 
-                        <View style={{ marginBottom: 60 }}>
-                            <Text style={loginStyles.title}>Email</Text>
-                            <TextInput
-                                style={loginStyles.input}
-                                placeholder="Email"
-                                placeholderTextColor="#A4A6AC"
-                                onChangeText={(text) => setEmail(text)}
-                                value={email}
-                            />
+            <div style={{ marginBottom: 60 }}>
+                <Title>Email</Title>
+                <Input
+                    type="email"
+                    placeholder="Email"
+                    onChange={(e) => setEmail(e.target.value)}
+                    value={email}
+                />
 
-                            <Text style={loginStyles.title}>Password</Text>
-                            <TextInput
-                                style={loginStyles.input}
-                                placeholder="Password"
-                                placeholderTextColor="#A4A6AC"
-                                secureTextEntry
-                                onChangeText={(text) => setPassword(text)}
-                                value={password}
-                            />
+                <Title>Password</Title>
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    onChange={(e) => setPassword(e.target.value)}
+                    value={password}
+                />
 
-                            {errors && <Text style={loginStyles.error}>{errors}</Text>}
-            
-                            <View style={loginStyles.loginBtn}>
-                                <Button color="#255A8B" onPress={doLogin} title="Prijavi se" />
-                            </View>
+                {errors && <ErrorText>{errors}</ErrorText>}
 
-                            
+                <LoginButtonWrapper>
+                    <button onClick={doLogin}>Prijavi se</button>
+                </LoginButtonWrapper>
 
-                            <View style={loginStyles.registerContainer}>
-                                <Text style={globalStyles.lightText}>Još uvijek nemaš račun? </Text>
-                                <Text style={loginStyles.registerText} onPress={() => navigate('Register')}>
-                                Registriraj se
-                                </Text>
-                            </View>
-                        </View>
-                    </View>
-                </ScrollView>
-            </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
+                <RegisterContainer>
+                    <span>Još uvijek nemaš račun? </span>
+                    <RegisterText onClick={() => navigate('/register')}>
+                        Registriraj se
+                    </RegisterText>
+                </RegisterContainer>
+            </div>
+        </LoginContainer>
     );
 };
 

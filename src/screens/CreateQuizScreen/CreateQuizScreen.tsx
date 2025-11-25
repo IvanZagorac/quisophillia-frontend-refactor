@@ -1,12 +1,9 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { createQuizStyle } from './CreateQuizStyle';
-import StepProgress from './StepProgress';
-// import DateTimePicker from '@react-native-community/datetimepicker';
+import { Container, Title, StepIndicator, Input, Label, StyledSelect, DatePickerContainer, Subtitle, Button, ButtonText, ProgressBarWrapper, ProgressBarBox } from './CreateQuizStyle';
+import StepProgress from './StepProgress'; // Will be converted separately
 
-export default function CreateQuizScreen() 
+export default function CreateQuizScreen()
 {
     const [step, setStep] = useState(1);
 
@@ -25,72 +22,64 @@ export default function CreateQuizScreen()
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [wrongAnswer, setWrongAnswer] = useState('');
 
-    const onNext = () => 
+    const onNext = () =>
     {
-        if (step < 3) 
+        if (step < 3)
         {
             setStep(step + 1);
         }
     };
 
     return (
-        <ScrollView style={createQuizStyle.container}>
-            <Text style={createQuizStyle.title}>Napravi novi kviz</Text>
-            <View style={createQuizStyle.stepIndicator}>
+        <Container>
+            <Title>Napravi novi kviz</Title>
+            <StepIndicator>
                 <StepProgress currentStep={step} onStepChange={setStep} />
-                {/* <Text style={[createQuizStyle.step, step >= 1 && createQuizStyle.activeStep]}>Osnovne informacije</Text>
-                <Text style={[createQuizStyle.step, step >= 2 && createQuizStyle.activeStep]}>Postavke</Text>
-                <Text style={[createQuizStyle.step, step >= 3 && createQuizStyle.activeStep]}>Postavi kviz</Text> */}
-            </View>
+            </StepIndicator>
 
             {step === 1 && (
                 <>
-                    <TextInput style={createQuizStyle.input} placeholder="Cijena" value={price} onChangeText={setPrice} />
-                    <TextInput style={createQuizStyle.input} placeholder="Trajanje" value={duration} onChangeText={setDuration} />
-                    <TextInput style={createQuizStyle.input} placeholder="Pauza" value={pause} onChangeText={setPause} />
-                    <TextInput style={createQuizStyle.input} placeholder="Kategorija" value={category} onChangeText={setCategory} />
-                    <TextInput style={createQuizStyle.input} placeholder="Ukupno pitanja" keyboardType="numeric" value={totalQuestions} onChange={setTotalQuestions} />
+                    <Input type="text" placeholder="Cijena" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    <Input type="text" placeholder="Trajanje" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                    <Input type="text" placeholder="Pauza" value={pause} onChange={(e) => setPause(e.target.value)} />
+                    <Input type="text" placeholder="Kategorija" value={category} onChange={(e) => setCategory(e.target.value)} />
+                    <Input type="number" placeholder="Ukupno pitanja" value={totalQuestions} onChange={(e) => setTotalQuestions(e.target.value)} />
 
-                    <View style={createQuizStyle.datePickerContainer}>
-                        <Text style={createQuizStyle.label}>Datum početka</Text>
-                        {/* <DateTimePicker value={startDate} mode="datetime" display="default" onChange={(e: any, date: any) => date && setStartDate(date)} /> */}
-                    </View>
+                    <DatePickerContainer>
+                        <Label>Datum početka</Label>
+                        {/* <input type="datetime-local" value={startDate.toISOString().slice(0, 16)} onChange={(e) => setStartDate(new Date(e.target.value))} /> */}
+                    </DatePickerContainer>
                 </>
             )}
 
             {step === 2 && (
                 <>
-                    <View style={createQuizStyle.containerProgress}>
-                        {Array.from({ length: parseInt(totalQuestions,10 ) }).map((_, index) => (
-                            <View
+                    <ProgressBarWrapper>
+                        {Array.from({ length: parseInt(totalQuestions, 10) }).map((_, index) => (
+                            <ProgressBarBox
                                 key={index}
-                                style={[
-                                    createQuizStyle.box,
-                                    index < currentCount ? createQuizStyle.filledBox : createQuizStyle.emptyBox
-                                ]}
+                                filled={index < currentCount}
                             />
                         ))}
-                    </View>
-                    <Text style={createQuizStyle.subtitle}>Pitanje 1</Text>
+                    </ProgressBarWrapper>
+                    <Subtitle>Pitanje 1</Subtitle>
 
-                    <Text style={createQuizStyle.label}>Tip pitanja</Text>
-                    <Picker selectedValue={questionType} onValueChange={setQuestionType} style={createQuizStyle.picker}>
-                        <Picker.Item label="Pjesma" value="Pjesma" />
-                        <Picker.Item label="Tekst" value="Tekst" />
-                        <Picker.Item label="Slika" value="Slika" />
-                    </Picker>
+                    <Label>Tip pitanja</Label>
+                    <StyledSelect value={questionType} onChange={(e) => setQuestionType(e.target.value)}>
+                        <option value="Pjesma">Pjesma</option>
+                        <option value="Tekst">Tekst</option>
+                        <option value="Slika">Slika</option>
+                    </StyledSelect>
 
-                    <TextInput style={createQuizStyle.input} placeholder="Pitanje" value={questionText} onChangeText={setQuestionText} />
-                    <TextInput style={createQuizStyle.input} placeholder="Točan odgovor" keyboardType="numeric" value={correctAnswer} onChangeText={setCorrectAnswer} />
-                    <TextInput style={createQuizStyle.input} placeholder="Netočan odgovor" keyboardType="numeric" value={wrongAnswer} onChangeText={setWrongAnswer} />
+                    <Input type="text" placeholder="Pitanje" value={questionText} onChange={(e) => setQuestionText(e.target.value)} />
+                    <Input type="number" placeholder="Točan odgovor" value={correctAnswer} onChange={(e) => setCorrectAnswer(e.target.value)} />
+                    <Input type="number" placeholder="Netočan odgovor" value={wrongAnswer} onChange={(e) => setWrongAnswer(e.target.value)} />
                 </>
             )}
 
-            <TouchableOpacity style={createQuizStyle.button} onPress={onNext}>
-                <Text style={createQuizStyle.buttonText}>Sljedeće</Text>
-            </TouchableOpacity>
-        </ScrollView>
+            <Button onClick={onNext}>
+                <ButtonText>Sljedeće</ButtonText>
+            </Button>
+        </Container>
     );
 }
-
-

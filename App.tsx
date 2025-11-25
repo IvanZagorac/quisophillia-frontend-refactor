@@ -1,39 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import AppNavigator from './src/navigation/Navigator';
-import { useFonts } from 'expo-font';
+import WebNavigator from './src/navigation/WebNavigator';
 import { Provider } from 'react-redux';
-import AppLoading from './components/AppLoading'; 
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import AppLoading from './components/AppLoading';
 import { store } from './src/store/store';
+import { GlobalStyle } from './src/styles/globalStyles'; // Import GlobalStyle
 
-
-export default function App() 
+export default function App()
 {
-
-    const [fontsLoaded] = useFonts({
-        'Lato-Regular': require('./assets/fonts/Lato/Lato-Regular.ttf'),
-        'Lato-Bold': require('./assets/fonts/Lato/Lato-Bold.ttf'),
-        'PlayfairDisplay-Regular': require('./assets/fonts/Playfair_Display/PlayfairDisplay-Regular.ttf'),
-        'PlayfairDisplay-Bold': require('./assets/fonts/Playfair_Display/PlayfairDisplay-Bold.ttf'),
-    });
-
-    if (!fontsLoaded) 
-    {
-        return <AppLoading loadingText="Loading fonts, please wait..." />;
-    }
+    // Font loading and splash screen logic will be handled differently for web.
+    // For now, we'll assume fonts are loaded and proceed directly to rendering.
 
     return (
-        <>
-            <Provider store={store}>
-                <GestureHandlerRootView style={{ flex: 1 }}>
-                    <SafeAreaProvider>
-                        <AppNavigator />
-                        <StatusBar style="auto" />
-                    </SafeAreaProvider>
-                </GestureHandlerRootView>
-            </Provider>
-        </>
+        <Provider store={store}>
+            <GlobalStyle /> {/* Inject global styles */}
+            {/* GestureHandlerRootView and SafeAreaProvider are React Native specific and removed */}
+            <WebNavigator />
+            {/* StatusBar is React Native specific and removed */}
+        </Provider>
     );
 }
+
+
 

@@ -1,88 +1,150 @@
-import { StyleSheet } from 'react-native';
-export const createQuizStyle = StyleSheet.create({
-    container: { flex: 1, backgroundColor: '#0B1633', padding: 20 },
-    title: { fontSize: 22, color: 'white', marginBottom: 20, textAlign: 'center' },
-    stepIndicator: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 20 },
-    step: { color: '#555', fontSize: 12 },
-    activeStep: { color: '#00D4FF', fontWeight: 'bold' },
-    input: {
-        borderBottomWidth: 1,
-        borderBottomColor: '#00D4FF',
-        color: 'white',
-        marginBottom: 15,
-        paddingVertical: 8,
-    },
-    label: { color: '#AAA', marginTop: 10, marginBottom: 5 },
-    picker: { backgroundColor: '#19294d', color: 'white', marginBottom: 15 },
-    datePickerContainer: { marginTop: 10 },
-    subtitle: { fontSize: 18, color: 'white', marginBottom: 10 },
-    button: {
-        backgroundColor: '#00D4FF',
-        padding: 12,
-        borderRadius: 5,
-        marginTop: 30,
-        alignItems: 'center',
-    },
-    buttonText: { color: 'black', fontWeight: 'bold' },
-    /* 
-        StepContainer
-    */
-    containerStep: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginVertical: 20 },
-    stepContainer: { alignItems: 'center' },
-    circle: {
-        width: 14,
-        height: 14,
-        borderRadius: 7,
-        backgroundColor: '#19294d',
-        borderWidth: 2,
-        borderColor: '#00D4FF',
-        marginBottom: 5,
-    },
-    completedCircle: {
-        backgroundColor: '#00D4FF',
-    },
-    activeCircle: {
-        backgroundColor: '#00D4FF',
-        borderColor: '#00D4FF',
-    },
-    line: {
-        height: 2,
-        backgroundColor: '#00D4FF',
-        flex: 1,
-        marginHorizontal: 5,
-    },
-    labelStep: {
-        color: '#fff',
-        fontSize: 12,
-        textAlign: 'center',
-        width: 80,
-    },
-    activeLabel: {
-        fontWeight: 'bold',
-        color: '#00D4FF',
-    },
+import styled from 'styled-components';
 
-    /* 
-        Progress bar    
-    */
+export const Container = styled.div`
+    flex: 1;
+    background-color: #0B1633;
+    padding: 20px;
+`;
 
-    containerProgress: {
-        flexDirection: 'row',
-        marginTop: 10,
-        flexWrap: 'wrap',
-        gap: 3,
-    },
-    box: {
-        width: 10,
-        height: 10,
-        margin: 2,
-        borderRadius: 1,
-    },
-    filledBox: {
-        backgroundColor: '#00D4AA',
-    },
-    emptyBox: {
-        backgroundColor: '#fff',
-        opacity: 0.5,
-    },
-});
+export const Title = styled.h1`
+    font-size: 22px;
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+`;
+
+export const StepIndicator = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 20px;
+`;
+
+export const StepText = styled.p<{ active?: boolean }>`
+    color: ${props => (props.active ? '#00D4FF' : '#555')};
+    font-size: 12px;
+    font-weight: ${props => (props.active ? 'bold' : 'normal')};
+`;
+
+export const Input = styled.input`
+    border-bottom: 1px solid #00D4FF;
+    color: white;
+    margin-bottom: 15px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    background: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    width: 100%;
+    box-sizing: border-box;
+`;
+
+export const Label = styled.p`
+    color: #AAA;
+    margin-top: 10px;
+    margin-bottom: 5px;
+`;
+
+export const StyledSelect = styled.select`
+    background-color: #19294d;
+    color: white;
+    margin-bottom: 15px;
+    padding: 8px;
+    border: 1px solid #19294d; /* Add border for visibility */
+    border-radius: 4px; /* Add border-radius for styling */
+    outline: none;
+`;
+
+export const DatePickerContainer = styled.div`
+    margin-top: 10px;
+`;
+
+export const Subtitle = styled.h2`
+    font-size: 18px;
+    color: white;
+    margin-bottom: 10px;
+`;
+
+export const Button = styled.button`
+    background-color: #00D4FF;
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+`;
+
+export const ButtonText = styled.span`
+    color: black;
+    font-weight: bold;
+`;
+
+/*
+    StepContainer
+*/
+export const StepContainerWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+`;
+
+export const StepContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+export const Circle = styled.div<{ completed?: boolean; active?: boolean }>`
+    width: 14px;
+    height: 14px;
+    border-radius: 7px;
+    background-color: ${props => (props.completed || props.active ? '#00D4FF' : '#19294d')};
+    border: 2px solid ${props => (props.active ? '#00D4FF' : '#00D4FF')};
+    margin-bottom: 5px;
+`;
+
+export const Line = styled.div`
+    height: 2px;
+    background-color: #00D4FF;
+    flex: 1;
+    margin-left: 5px;
+    margin-right: 5px;
+`;
+
+export const StepLabel = styled.p<{ active?: boolean }>`
+    color: ${props => (props.active ? '#00D4FF' : '#fff')};
+    font-size: 12px;
+    text-align: center;
+    width: 80px;
+    font-weight: ${props => (props.active ? 'bold' : 'normal')};
+`;
+
+/*
+    Progress bar
+*/
+export const ProgressBarWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    flex-wrap: wrap;
+    gap: 3px;
+`;
+
+export const ProgressBarBox = styled.div<{ filled?: boolean }>`
+    width: 10px;
+    height: 10px;
+    margin: 2px;
+    border-radius: 1px;
+    background-color: ${props => (props.filled ? '#00D4AA' : '#fff')};
+    opacity: ${props => (props.filled ? 1 : 0.5)};
+`;

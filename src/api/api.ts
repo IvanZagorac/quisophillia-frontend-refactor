@@ -113,5 +113,5 @@ async function repeatRequest(requestData: AxiosRequestConfig): Promise<ApiRespon
 // Redirect to login (correct for React Native)
 function redirectToLogin() 
 {
-    navigate('Login')
+    window.location.href = '/login'; 
 }

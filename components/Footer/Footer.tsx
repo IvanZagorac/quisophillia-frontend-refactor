@@ -1,23 +1,18 @@
-import { View} from 'react-native';
-import { footerStyles } from './FooterStyle';
+import { FooterContainer, IconContainer } from './FooterStyle';
 import CustomIcon from '../Icon/CustomIcon';
-import { faPeopleGroup } from '@fortawesome/free-solid-svg-icons';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
-import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
-import { faBrain } from '@fortawesome/free-solid-svg-icons';
+import { faPeopleGroup, faWallet, faPenToSquare, faBrain } from '@fortawesome/free-solid-svg-icons';
 
-const Footer= () => 
+const Footer = () =>
 {
     return (
-        
-        <View style={footerStyles.footer}>
-            <View style={footerStyles.iconContainer}>
+        <FooterContainer>
+            <IconContainer>
                 <CustomIcon icon={faBrain} color='#B4BECA'/>
                 <CustomIcon icon={faPenToSquare} color='#B4BECA'/>
                 <CustomIcon icon={faPeopleGroup} color='#B4BECA'/>
                 <CustomIcon icon={faWallet} color='#B4BECA'/>
-            </View>
-        </View>
+            </IconContainer>
+        </FooterContainer>
     );
 };
 
