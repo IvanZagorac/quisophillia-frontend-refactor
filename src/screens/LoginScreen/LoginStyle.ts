@@ -4,9 +4,15 @@ export const LoginContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 20px;
     min-height: 100vh; /* Ensure it takes full viewport height for centering */
-    background-color: #2e2e2e; /* Assuming a background color from globalStyles or default */
+    background-color: #06223B; /* Assuming a background color from globalStyles or default */
+`;
+
+export const FormContainer = styled.div`
+    width: 100%;
+    max-width: 400px;
 `;
 
 export const Title = styled.p`

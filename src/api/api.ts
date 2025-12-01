@@ -1,7 +1,7 @@
 import axios, {AxiosRequestConfig, AxiosResponse } from 'axios';
 import { config } from '../../config/config';
 import { getToken, saveToken } from './authUtils';
-import { navigate } from '../../components/Navigation';
+
 
 export interface ApiResponse {
   status: 'ok' | 'error' | 'login';

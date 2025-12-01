@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LoginScreen from '../screens/LoginScreen/LoginScreen';
 import RegisterScreen from '../screens/RegisterScreen/RegisterScreen';
@@ -6,7 +5,8 @@ import HomeScreen from '../screens/HomeScreen/HomeScreen';
 import CreateQuizScreen from '../screens/CreateQuizScreen/CreateQuizScreen';
 // import { RootStackParamList } from '../types/RootStackParamList'; // May not be directly applicable for react-router-dom
 
-const WebNavigator = () => {
+const WebNavigator = () => 
+{
     return (
         <BrowserRouter>
             <Routes>

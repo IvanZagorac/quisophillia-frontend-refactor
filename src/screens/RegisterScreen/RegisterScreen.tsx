@@ -6,7 +6,7 @@ import { UserRegisterType } from '../../types/UserRegisterType';
 import { saveToken } from '../../api/authUtils';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
-import { RegisterContainer, Title, Input, ErrorText, RegisterButtonWrapper, RegisterPromptContainer, RegisterLinkText, EyeButton, StyledSelect, PasswordInputWrapper } from './RegisterStyle';
+import { FormContainer, LogoWrapper, RegisterContainer, Title, Input, ErrorText, RegisterButtonWrapper, RegisterPromptContainer, RegisterLinkText, EyeButton, StyledSelect, PasswordInputWrapper } from './RegisterStyle';
 
 
 const registerSchema = z.object({
@@ -102,68 +102,77 @@ const RegisterScreen = () =>
 
     return (
         <RegisterContainer>
-            <Title>Name</Title>
-            <Input
-                placeholder="Ime"
-                onChange={(e) => handleChange('name', e.target.value)}
-            />
-            {errors.name && <ErrorText>{errors.name}</ErrorText>}
-
-            <Title>Surname</Title>
-            <Input
-                placeholder="Prezime"
-                onChange={(e) => handleChange('surname', e.target.value)}
-            />
-            {errors.surname && <ErrorText>{errors.surname}</ErrorText>}
-
-            <Title>Email</Title>
-            <Input
-                type="email"
-                placeholder="Email"
-                onChange={(e) => handleChange('email', e.target.value)}
-            />
-            {errors.email && <ErrorText>{errors.email}</ErrorText>}
-
-            <Title>Password</Title>
-            <PasswordInputWrapper>
-                <Input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder="Lozinka"
-                    onChange={(e) => handleChange('password', e.target.value)}
+            <LogoWrapper>
+                <img
+                    src="/assets/images/quizophilia-high-resolution-logo-white-transparent.png"
+                    alt="Quizophilia Logo"
+                    style={{ width: 250, height: 157 }}
                 />
-                <EyeButton onClick={() => setShowPassword(!showPassword)}>
-                    {showPassword ? <EyeOff size={24} color="gray" /> : <Eye size={24} color="gray" />}
-                </EyeButton>
-            </PasswordInputWrapper>
-            {errors.password && <ErrorText>{errors.password}</ErrorText>}
-
-            <Title>Confirm Password</Title>
-            <PasswordInputWrapper>
+            </LogoWrapper>
+            <FormContainer>
+                <Title>Name</Title>
                 <Input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder="Potvrdi lozinku"
-                    onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                    placeholder="Ime"
+                    onChange={(e) => handleChange('name', e.target.value)}
                 />
-                <EyeButton onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-                    {showConfirmPassword ? <EyeOff size={24} color="gray" /> : <Eye size={24} color="gray" />}
-                </EyeButton>
-            </PasswordInputWrapper>
-            {errors.confirmPassword && <ErrorText>{errors.confirmPassword}</ErrorText>}
+                {errors.name && <ErrorText>{errors.name}</ErrorText>}
 
-            <StyledSelect
-                value={user.type}
-                onChange={(e) => handleChange('type', e.target.value)}
-            >
-                <option value="Player">Player</option>
-                <option value="Maker">Maker</option>
-            </StyledSelect>
+                <Title>Surname</Title>
+                <Input
+                    placeholder="Prezime"
+                    onChange={(e) => handleChange('surname', e.target.value)}
+                />
+                {errors.surname && <ErrorText>{errors.surname}</ErrorText>}
 
-            <input type="file" onChange={pickImage} />
-            {user.image && <img src={URL.createObjectURL(user.image as File)} alt="Preview" style={{ width: 100, height: 100 }} />}
+                <Title>Email</Title>
+                <Input
+                    type="email"
+                    placeholder="Email"
+                    onChange={(e) => handleChange('email', e.target.value)}
+                />
+                {errors.email && <ErrorText>{errors.email}</ErrorText>}
 
-            <RegisterButtonWrapper>
-                <button onClick={doRegister}>Register</button>
-            </RegisterButtonWrapper>
+                <Title>Password</Title>
+                <PasswordInputWrapper>
+                    <Input
+                        type={showPassword ? 'text' : 'password'}
+                        placeholder="Lozinka"
+                        onChange={(e) => handleChange('password', e.target.value)}
+                    />
+                    <EyeButton onClick={() => setShowPassword(!showPassword)}>
+                        {showPassword ? <EyeOff size={24} color="gray" /> : <Eye size={24} color="gray" />}
+                    </EyeButton>
+                </PasswordInputWrapper>
+                {errors.password && <ErrorText>{errors.password}</ErrorText>}
+
+                <Title>Confirm Password</Title>
+                <PasswordInputWrapper>
+                    <Input
+                        type={showConfirmPassword ? 'text' : 'password'}
+                        placeholder="Potvrdi lozinku"
+                        onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                    />
+                    <EyeButton onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                        {showConfirmPassword ? <EyeOff size={24} color="gray" /> : <Eye size={24} color="gray" />}
+                    </EyeButton>
+                </PasswordInputWrapper>
+                {errors.confirmPassword && <ErrorText>{errors.confirmPassword}</ErrorText>}
+
+                <StyledSelect
+                    value={user.type}
+                    onChange={(e) => handleChange('type', e.target.value)}
+                >
+                    <option value="Player">Player</option>
+                    <option value="Maker">Maker</option>
+                </StyledSelect>
+
+                <input type="file" onChange={pickImage} />
+                {user.image && <img src={URL.createObjectURL(user.image as File)} alt="Preview" style={{ width: 100, height: 100 }} />}
+
+                <RegisterButtonWrapper>
+                    <button onClick={doRegister}>Register</button>
+                </RegisterButtonWrapper>
+            </FormContainer>
         </RegisterContainer>
     );
 };

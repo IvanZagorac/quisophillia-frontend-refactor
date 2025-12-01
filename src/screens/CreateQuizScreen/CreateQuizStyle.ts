@@ -4,6 +4,10 @@ export const Container = styled.div`
     flex: 1;
     background-color: #0B1633;
     padding: 20px;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        padding: 40px;
+    }
 `;
 
 export const Title = styled.h1`
@@ -24,6 +28,10 @@ export const StepText = styled.p<{ active?: boolean }>`
     color: ${props => (props.active ? '#00D4FF' : '#555')};
     font-size: 12px;
     font-weight: ${props => (props.active ? 'bold' : 'normal')};
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+        font-size: 10px;
+    }
 `;
 
 export const Input = styled.input`
@@ -127,6 +135,11 @@ export const StepLabel = styled.p<{ active?: boolean }>`
     text-align: center;
     width: 80px;
     font-weight: ${props => (props.active ? 'bold' : 'normal')};
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+        font-size: 10px;
+        width: 60px;
+    }
 `;
 
 /*

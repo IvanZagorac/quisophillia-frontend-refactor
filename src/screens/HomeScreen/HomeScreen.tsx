@@ -147,37 +147,37 @@ const QuizList = () =>
 
             <NavItems>
                 <NavItem>
-                    <CustomIcon icon={faHome} size={20} color='#B4BECA'/>
+                    <CustomIcon icon={faHome} size='lg' color='#B4BECA'/>
                     <NavText>Home</NavText>
                 </NavItem>
                 <NavItem>
-                    <CustomIcon icon={faUser} size={20} color='#B4BECA'/>
+                    <CustomIcon icon={faUser} size='lg' color='#B4BECA'/>
                     <NavText>Profil</NavText>
                 </NavItem>
                 <NavItem>
-                    <CustomIcon icon={faWallet} size={20} color='#B4BECA'/>
+                    <CustomIcon icon={faWallet} size='lg' color='#B4BECA'/>
                     <NavText>Novčanik</NavText>
                 </NavItem>
                 <NavItem>
-                    <CustomIcon icon={faExclamation} size={20} color='#B4BECA'/>
+                    <CustomIcon icon={faExclamation} size='lg' color='#B4BECA'/>
                     <NavText>Prijavi grešku</NavText>
                 </NavItem>
                 <NavItem>
-                    <CustomIcon icon={faMessage} size={20} color='#B4BECA'/>
+                    <CustomIcon icon={faMessage} size='lg' color='#B4BECA'/>
                     <NavText>Poruke</NavText>
                 </NavItem>
                 <NavItem>
-                    <CustomIcon icon={faBell} size={20} color='#B4BECA'/>
+                    <CustomIcon icon={faBell} size='lg' color='#B4BECA'/>
                     <NavText>Obavijesti</NavText>
                 </NavItem>
                 <NavItem>
-                    <CustomIcon icon={faChartLine} size={20} color='#B4BECA'/>
+                    <CustomIcon icon={faChartLine} size='lg' color='#B4BECA'/>
                     <NavText>Aktivni kvizovi</NavText>
                 </NavItem>
             </NavItems>
 
             <LogoutButton  onClick={doLogout}>
-                <CustomIcon icon={faArrowRightFromBracket} size={20} color='red'/>
+                <CustomIcon icon={faArrowRightFromBracket} size='lg' color='red'/>
                 <LogoutText>Odllogiraj me</LogoutText>
             </LogoutButton>
         </DrawerContainer>
@@ -266,7 +266,8 @@ const QuizList = () =>
                                 </SortContainer>
                                 <SortContainer>
                                     <StyledDropdown
-                                        onChange={e => {
+                                        onChange={e => 
+                                        {
                                             console.log(e.target.value);
                                             setFilterValue({...filterValue, category: e.target.value})
                                         }}
@@ -281,7 +282,8 @@ const QuizList = () =>
                             <PrizeWrapper>
                                 <Label>Cijena: 0 - 10000</Label>
                                 <input type="range" min="0" max="10000"
-                                    onChange={e => {
+                                    onChange={e => 
+                                    {
                                         console.log(e.target.value);
                                         setFilterValue({...filterValue, prize: parseFloat(e.target.value)})
                                     }} />

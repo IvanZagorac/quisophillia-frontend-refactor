@@ -4,9 +4,15 @@ export const RegisterContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     padding: 20px;
     min-height: 100vh;
-    background-color: #2e2e2e; /* Assuming a background color from globalStyles or default */
+    background-color: #06223B;
+`;
+
+export const FormContainer = styled.div`
+    width: 100%;
+    max-width: 400px;
 `;
 
 export const Title = styled.p`
@@ -71,12 +77,12 @@ export const RegisterLinkText = styled.span`
 export const EyeButton = styled.button`
     position: absolute;
     right: 10px;
-    bottom: 10px; /* Adjusted from 20px to better align with input */
+    bottom: 10px;
     background: none;
     border: none;
     cursor: pointer;
     padding: 0;
-    display: flex; /* To center the icon if it's smaller than the button */
+    display: flex;
     align-items: center;
     justify-content: center;
 `;
@@ -92,14 +98,14 @@ export const StyledSelect = styled.select`
     height: 50px;
     width: 100%;
     color: white;
-    background-color: #2e2e2e; /* Match background or make it transparent */
-    border: 1px solid gray;
+    background-color: transparent;
+    border: 1px solid #207179;
     border-radius: 5px;
     margin-bottom: 20px;
     padding: 0 10px;
 
     option {
-        background-color: #2e2e2e;
+        background-color: #06223B;
         color: white;
     }
 `;
@@ -111,6 +117,6 @@ export const PasswordInputWrapper = styled.div`
     margin-bottom: 20px;
 
     ${Input} {
-        margin-bottom: 0; /* Remove default margin from Input */
+        margin-bottom: 0;
     }
 `;

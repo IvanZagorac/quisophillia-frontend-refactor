@@ -41,7 +41,7 @@ const Header = () =>
 
                     <UserStats>
                         <FlexWrapper>
-                            <CustomIcon icon={faRankingStar} size={16} color='#B4BECA'/>
+                            <CustomIcon icon={faRankingStar} size='lg' color='#B4BECA'/>
                             <StatText>104.</StatText>
                         </FlexWrapper>
                         <FlexWrapper>
@@ -49,7 +49,7 @@ const Header = () =>
                             <StatText>1345</StatText>
                         </FlexWrapper>
                         <FlexWrapper>
-                            <CustomIcon icon={faMoneyBill} size={16} color='#B4BECA'/>
+                            <CustomIcon icon={faMoneyBill} size='lg' color='#B4BECA'/>
                             <StatText>432.325$</StatText>
                         </FlexWrapper>
                     </UserStats>
@@ -57,8 +57,8 @@ const Header = () =>
             </UserProfile>
             <HeaderRight>
                 <button onClick={() => dispatch(setOpenMenu(!openMenu))}>
-                    {openMenu ?  <CustomIcon icon={faXmark} size={24} color='#B4BECA'/> :
-                        <CustomIcon icon={faBars} size={24} color='#B4BECA'/>}
+                    {openMenu ?  <CustomIcon icon={faXmark} size='xl' color='#B4BECA'/> :
+                        <CustomIcon icon={faBars} size='xl' color='#B4BECA'/>}
                 </button>
             </HeaderRight>
         </HeaderContainer>

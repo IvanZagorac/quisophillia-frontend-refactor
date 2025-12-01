@@ -26,17 +26,17 @@ export const TextWrapper = styled.div`
     border-radius: 40px;
     align-items: center;
     border: 1px solid #2B496C;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding: 5px 10px;
     display: flex;
 `;
 
 export const Content = styled.div`
     flex: 1;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 0 16px;
+
+    @media (min-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        padding: 0 40px;
+    }
 `;
 
 export const ListContent = styled.div`
@@ -51,7 +51,6 @@ export const QuizCard = styled.div`
     padding: 15px;
     margin-bottom: 20px;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Equivalent to shadow on web */
-    /* elevation: 3; - web equivalent is box-shadow */
 `;
 
 export const QuizHeader = styled.div`
@@ -65,10 +64,7 @@ export const QuizHeader = styled.div`
 export const CreateQuizButton = styled.button`
     background-color: #255A8B;
     color: white;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 5px 15px;
     margin-bottom: 20px;
     border-radius: 5px; /* Added border-radius for button */
     border: none;
@@ -77,7 +73,6 @@ export const CreateQuizButton = styled.button`
 `;
 
 export const ButtonText = styled.span`
-    /* This style is now directly on the button */
     color: white;
     font-family: 'Roboto-Medium'; /* Assuming Roboto is loaded globally */
 `;
@@ -86,10 +81,7 @@ export const Input = styled.input`
     border-bottom: 1px solid #207179;
     color: white;
     background-color: #255A8B;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding: 5px 25px;
     border-top: none;
     border-left: none;
     border-right: none;
@@ -104,6 +96,11 @@ export const HeaderCardContent = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `;
 
 export const QuizTitle = styled.p`
@@ -147,6 +144,10 @@ export const WrapperButtons = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: center;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+        flex-direction: column;
+    }
 `;
 
 export const QuizFooter = styled.div`
@@ -156,6 +157,11 @@ export const QuizFooter = styled.div`
     align-items: center;
     border-top: 1px solid #eee;
     padding-top: 12px;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `;
 
 export const QuizCreator = styled.p`
@@ -167,10 +173,7 @@ export const QuizCreator = styled.p`
 export const ApplyButton = styled.button<{ applied: boolean }>`
     background-color: ${props => props.applied ? '#207179' : '#255A8B'};
     color: white;
-    padding-top: 6px;
-    padding-bottom: 6px;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding: 6px 16px;
     border-radius: 15px;
     border: none;
     cursor: pointer;
@@ -182,7 +185,7 @@ export const ApplyButtonText = styled.span`
     color: white;
 `;
 
-// Drawer styles (will be integrated into a web sidebar component)
+// Drawer styles
 export const DrawerContainer = styled.div`
     flex: 1;
     background-color: #06223B;
@@ -193,24 +196,20 @@ export const HeaderUserProfile = styled.div`
 `;
 
 export const NavItems = styled.div`
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px 0;
 `;
 
 export const NavItem = styled.button`
     display: flex;
     flex-direction: row;
     align-items: center;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 12px 20px;
     margin-bottom: 15px;
     background: none;
     border: none;
     cursor: pointer;
-    width: 100%; /* Make button take full width */
-    text-align: left; /* Align text to left */
+    width: 100%;
+    text-align: left;
 `;
 
 export const NavText = styled.span`
@@ -221,16 +220,12 @@ export const NavText = styled.span`
 `;
 
 export const LogoutButton = styled.button`
-    margin-left: 20px;
+    margin: 50px 20px 0;
     max-width: 200px;
-    margin-top: 50px;
     display: flex;
     flex-direction: row;
     border: 1px solid #1F3D5B;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 12px 20px;
     border-radius: 8px;
     align-items: center;
     background: none;
@@ -251,7 +246,7 @@ export const FilterMenuContainer = styled.div`
     background-color: #E8EAEE;
     padding: 16px;
     border-radius: 8px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); /* Equivalent to elevation */
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
     margin: 16px;
 `;
 
@@ -260,6 +255,10 @@ export const SortContainer = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        width: 100%;
+    }
 `;
 
 export const FilterMenuHeader = styled.div`
@@ -269,19 +268,19 @@ export const FilterMenuHeader = styled.div`
     align-items: center;
 `;
 
-export const CloseButton = styled.button` /* Changed from span to button */
+export const CloseButton = styled.button`
     color: #007AFF;
     font-weight: bold;
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 16px; /* To match X button size */
+    font-size: 16px;
 `;
 
 export const FilterTitle = styled.h3`
     font-size: 18px;
     font-weight: bold;
-    color: black; /* Assuming default text color for filters */
+    color: black;
 `;
 
 export const Label = styled.label`
@@ -289,7 +288,7 @@ export const Label = styled.label`
     margin-bottom: 8px;
     font-weight: 600;
     font-size: 12px;
-    color: black; /* Assuming default text color for filters */
+    color: black;
 `;
 
 export const PrizeWrapper = styled.div`
@@ -303,6 +302,10 @@ export const PrizeWrapper = styled.div`
 export const CategoryFavoritWrapper = styled.div`
     display: flex;
     flex-direction: row;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        flex-direction: column;
+    }
 `;
 
 export const SortPrizeWrapper = styled.div`
@@ -311,17 +314,20 @@ export const SortPrizeWrapper = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 `;
 
 export const StyledDropdown = styled.select`
     background-color: #f0f0f0;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 10px;
+    padding: 5px 10px;
     flex: 1;
     border-radius: 16px;
-    border: 1px solid #ccc; /* Added default border */
-    color: black; /* Default text color */
+    border: 1px solid #ccc;
+    color: black;
     font-size: 12px;
     outline: none;
 
@@ -345,7 +351,7 @@ export const Row = styled.div`
 export const FiltersDisplayContainer = styled.div`
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; /* Allow items to wrap */
+    flex-wrap: wrap;
     margin-top: 30px;
 `;
 
@@ -353,16 +359,20 @@ export const FilterItem = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 32%; /* This might need adjustment for responsiveness */
+    width: 32%;
     background-color: #207179;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    padding-left: 8px;
-    padding-right: 8px;
+    padding: 4px 8px;
     border-radius: 16px;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    align-items: center; /* Vertically center content */
+    margin: 4px;
+    align-items: center;
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+        width: 45%;
+    }
+
+    @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+        width: 100%;
+    }
 `;
 
 export const FilterText = styled.span`
@@ -370,11 +380,10 @@ export const FilterText = styled.span`
     margin-right: 4px;
 `;
 
-export const ClearButton = styled.button` /* Changed from Text to button */
+export const ClearButton = styled.button`
     color: #B4BECA;
     font-size: 16px;
-    padding-left: 4px;
-    padding-right: 4px;
+    padding: 0 4px;
     background: none;
     border: none;
     cursor: pointer;

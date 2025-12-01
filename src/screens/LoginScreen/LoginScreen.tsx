@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LoginContainer, Title, LoginButtonWrapper, Input, ErrorText, RegisterContainer, RegisterText, LogoWrapper } from './LoginStyle';
+import { FormContainer, LoginContainer, Title, LoginButtonWrapper, Input, ErrorText, RegisterContainer, RegisterText, LogoWrapper } from './LoginStyle';
 // import { globalStyles } from '../../styles/globalStyles'; // No longer needed directly here for styling
 import api from '../../api/api';
 import { saveToken } from '../../api/authUtils';
@@ -51,7 +51,7 @@ const LoginScreen = () =>
                 />
             </LogoWrapper>
 
-            <div style={{ marginBottom: 60 }}>
+            <FormContainer>
                 <Title>Email</Title>
                 <Input
                     type="email"
@@ -80,7 +80,7 @@ const LoginScreen = () =>
                         Registriraj se
                     </RegisterText>
                 </RegisterContainer>
-            </div>
+            </FormContainer>
         </LoginContainer>
     );
 };

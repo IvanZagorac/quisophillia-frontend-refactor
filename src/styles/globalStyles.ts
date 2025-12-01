@@ -1,5 +1,18 @@
 import styled, { createGlobalStyle } from 'styled-components';
 
+export const theme = {
+  breakpoints: {
+    mobile: '480px',
+    tablet: '768px',
+    desktop: '1024px',
+  },
+  devices: {
+    mobile: '(min-width: 480px)',
+    tablet: '(min-width: 768px)',
+    desktop: '(min-width: 1024px)',
+  },
+};
+
 // Global styles injected into the document
 export const GlobalStyle = createGlobalStyle`
   body {
