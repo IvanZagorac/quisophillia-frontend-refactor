@@ -6,8 +6,6 @@ import { UserRegisterType } from '../../types/UserRegisterType';
 import { saveToken } from '../../api/authUtils';
 import { useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
-import { FormContainer, LogoWrapper, RegisterContainer, Title, Input, ErrorText, RegisterButtonWrapper, RegisterPromptContainer, RegisterLinkText, EyeButton, StyledSelect, PasswordInputWrapper } from './RegisterStyle';
-
 
 const registerSchema = z.object({
     name: z.string().min(2, 'Ime mora imati najmanje 2 slova'),
@@ -21,8 +19,7 @@ const registerSchema = z.object({
     path: ['confirmPassword'],
 });
 
-
-const RegisterScreen = () =>
+const RegisterScreen = () => 
 {
     const navigate = useNavigate();
 
@@ -40,28 +37,30 @@ const RegisterScreen = () =>
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const pickImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files && event.target.files[0]) {
+    const pickImage = (event: React.ChangeEvent<HTMLInputElement>) => 
+    {
+        if (event.target.files && event.target.files[0]) 
+        {
             const file = event.target.files[0];
-            setUser({ ...user, image: file as any }); // Cast as any for now, will refine UserRegisterType
+            setUser({ ...user, image: file as any });
         }
     };
 
-    const handleChange = (key: string, value: string) =>
+    const handleChange = (key: string, value: string) => 
     {
         setUser({ ...user, [key]: value });
     };
 
-    const doRegister = async() =>
+    const doRegister = async () => 
     {
         const validation = registerSchema.safeParse(user);
 
-        if (!validation.success)
+        if (!validation.success) 
         {
             const formattedErrors: Record<string, string> = {};
-            validation.error.errors.forEach((err: any) =>
+            validation.error.errors.forEach((err: any) => 
             {
-                if (err.path.length > 0)
+                if (err.path.length > 0) 
                 {
                     formattedErrors[err.path[0]] = err.message;
                 }
@@ -70,25 +69,18 @@ const RegisterScreen = () =>
             return;
         }
         const formData = new FormData();
-        const data = { name: user.name, surname: user.surname,  email: user.email, password: user.password,  type: user.type }
+        const data = { name: user.name, surname: user.surname, email: user.email, password: user.password, type: user.type };
         formData.append('data', JSON.stringify(data));
 
-        if (user.image)
+        if (user.image) 
         {
-            formData.append('image', user.image); // Append the File object directly
+            formData.append('image', user.image);
         }
 
-        const response = await api(
-            'auth/register',
-            'POST',
-            formData,
-            true
-
-        );
-        console.log(response);
-        if (response.status === 'error')
+        const response = await api('auth/register', 'POST', formData, true);
+        if (response.status === 'error') 
         {
-            alert('Error: ' + response.data );
+            alert('Error: ' + response.data);
             return;
         }
         await saveToken(response.data.data.accessToken, 'token');
@@ -101,79 +93,87 @@ const RegisterScreen = () =>
     };
 
     return (
-        <RegisterContainer>
-            <LogoWrapper>
+        <div className="flex flex-col justify-center items-center p-5 min-h-screen bg-background">
+            <div className="flex justify-center items-center mb-10 tablet:mb-16">
                 <img
                     src="/assets/images/quizophilia-high-resolution-logo-white-transparent.png"
                     alt="Quizophilia Logo"
-                    style={{ width: 250, height: 157 }}
+                    className="w-48 h-auto mobile:w-64"
                 />
-            </LogoWrapper>
-            <FormContainer>
-                <Title>Name</Title>
-                <Input
+            </div>
+            <div className="w-full max-w-sm tablet:max-w-md">
+                <p className="text-white text-lg mb-2.5">Name</p>
+                <input
                     placeholder="Ime"
                     onChange={(e) => handleChange('name', e.target.value)}
+                    className="border-b border-[#207179] text-white pb-2.5 mb-5 bg-transparent w-full outline-none placeholder-light-text"
                 />
-                {errors.name && <ErrorText>{errors.name}</ErrorText>}
+                {errors.name && <p className="text-red-500 text-xs mb-2.5">{errors.name}</p>}
 
-                <Title>Surname</Title>
-                <Input
+                <p className="text-white text-lg mb-2.5">Surname</p>
+                <input
                     placeholder="Prezime"
                     onChange={(e) => handleChange('surname', e.target.value)}
+                    className="border-b border-[#207179] text-white pb-2.5 mb-5 bg-transparent w-full outline-none placeholder-light-text"
                 />
-                {errors.surname && <ErrorText>{errors.surname}</ErrorText>}
+                {errors.surname && <p className="text-red-500 text-xs mb-2.5">{errors.surname}</p>}
 
-                <Title>Email</Title>
-                <Input
+                <p className="text-white text-lg mb-2.5">Email</p>
+                <input
                     type="email"
                     placeholder="Email"
                     onChange={(e) => handleChange('email', e.target.value)}
+                    className="border-b border-[#207179] text-white pb-2.5 mb-5 bg-transparent w-full outline-none placeholder-light-text"
                 />
-                {errors.email && <ErrorText>{errors.email}</ErrorText>}
+                {errors.email && <p className="text-red-500 text-xs mb-2.5">{errors.email}</p>}
 
-                <Title>Password</Title>
-                <PasswordInputWrapper>
-                    <Input
+                <p className="text-white text-lg mb-2.5">Password</p>
+                <div className="relative flex items-center mb-5">
+                    <input
                         type={showPassword ? 'text' : 'password'}
                         placeholder="Lozinka"
                         onChange={(e) => handleChange('password', e.target.value)}
+                        className="border-b border-[#207179] text-white pb-2.5 bg-transparent w-full outline-none placeholder-light-text"
                     />
-                    <EyeButton onClick={() => setShowPassword(!showPassword)}>
+                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-2.5 bg-transparent border-none cursor-pointer p-0 flex items-center justify-center">
                         {showPassword ? <EyeOff size={24} color="gray" /> : <Eye size={24} color="gray" />}
-                    </EyeButton>
-                </PasswordInputWrapper>
-                {errors.password && <ErrorText>{errors.password}</ErrorText>}
+                    </button>
+                </div>
+                {errors.password && <p className="text-red-500 text-xs mb-2.5">{errors.password}</p>}
 
-                <Title>Confirm Password</Title>
-                <PasswordInputWrapper>
-                    <Input
+                <p className="text-white text-lg mb-2.5">Confirm Password</p>
+                <div className="relative flex items-center mb-5">
+                    <input
                         type={showConfirmPassword ? 'text' : 'password'}
                         placeholder="Potvrdi lozinku"
                         onChange={(e) => handleChange('confirmPassword', e.target.value)}
+                        className="border-b border-[#207179] text-white pb-2.5 bg-transparent w-full outline-none placeholder-light-text"
                     />
-                    <EyeButton onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
+                    <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-2.5 bg-transparent border-none cursor-pointer p-0 flex items-center justify-center">
                         {showConfirmPassword ? <EyeOff size={24} color="gray" /> : <Eye size={24} color="gray" />}
-                    </EyeButton>
-                </PasswordInputWrapper>
-                {errors.confirmPassword && <ErrorText>{errors.confirmPassword}</ErrorText>}
+                    </button>
+                </div>
+                {errors.confirmPassword && <p className="text-red-500 text-xs mb-2.5">{errors.confirmPassword}</p>}
 
-                <StyledSelect
+                <select
                     value={user.type}
                     onChange={(e) => handleChange('type', e.target.value)}
+                    className="h-12 w-full text-white bg-transparent border border-[#207179] rounded-md mb-5 px-2.5"
                 >
-                    <option value="Player">Player</option>
-                    <option value="Maker">Maker</option>
-                </StyledSelect>
+                    <option value="Player" className="bg-background text-white">Player</option>
+                    <option value="Maker" className="bg-background text-white">Maker</option>
+                </select>
 
-                <input type="file" onChange={pickImage} />
-                {user.image && <img src={URL.createObjectURL(user.image as File)} alt="Preview" style={{ width: 100, height: 100 }} />}
+                <input type="file" onChange={pickImage} className="text-white" />
+                {user.image && <img src={URL.createObjectURL(user.image as File)} alt="Preview" className="w-24 h-24 mt-4" />}
 
-                <RegisterButtonWrapper>
-                    <button onClick={doRegister}>Register</button>
-                </RegisterButtonWrapper>
-            </FormContainer>
-        </RegisterContainer>
+                <div className="mt-10">
+                    <button onClick={doRegister} className="bg-button text-white py-2.5 px-4 rounded-md cursor-pointer text-base w-full hover:bg-opacity-80 transition">
+                        Register
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 };
 

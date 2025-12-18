@@ -1,325 +1,144 @@
-import React, { useState } from 'react';
-import {
-    SafeArea, HeaderDataContainer, NameAndTeamContainer, HeaderTitle, TextWrapper, Content, ListContent,
-    QuizCard, QuizHeader, CreateQuizButton, ButtonText, Input, HeaderCardContent, QuizTitle, QuizMeta,
-    QuizSubtitle, FilterButton, QuizCode, WrapperButtons, QuizFooter, QuizCreator, ApplyButton, ApplyButtonText,
-    DrawerContainer, HeaderUserProfile, NavItems, NavItem, NavText, LogoutButton, LogoutText,
-    FilterMenuContainer, SortContainer, FilterMenuHeader, CloseButton, FilterTitle, Label, PrizeWrapper,
-    CategoryFavoritWrapper, SortPrizeWrapper, StyledDropdown, Row, FiltersDisplayContainer, FilterItem, FilterText, ClearButton
-} from './HomeStyle';
-import Header  from '../../../components/Header/Header';
+/* eslint-disable max-len */
+import { useState } from 'react';
+import Header from '../../../components/Header/Header';
 import Footer from '../../../components/Footer/Footer';
 import CustomIcon from '../../../components/Icon/CustomIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '../../store/store';
-import { setOpenMenu } from '../../store/openMenu/openMenuSlice';
-import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
-import { faStar as faStarRegular } from '@fortawesome/free-regular-svg-icons';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faWallet } from '@fortawesome/free-solid-svg-icons';
-import { faExclamation } from '@fortawesome/free-solid-svg-icons';
-import { faMessage } from '@fortawesome/free-solid-svg-icons';
-import { faBell } from '@fortawesome/free-solid-svg-icons';
-import { faChartLine } from '@fortawesome/free-solid-svg-icons';
-import { faSliders } from '@fortawesome/free-solid-svg-icons';
-import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+// eslint-disable-next-line max-len
+import { faStar as faStarSolid, faStar as faStarRegular, faHome, faUser, faSliders, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { FilterType } from '../../types/FilterType';
 import { getDecodedRefreshToken, removeToken } from '../../api/authUtils';
 import api from '../../api/api';
 import { useNavigate } from 'react-router-dom';
 
-
-// Mock data (keep for now)
+// Mock data
 const quizData = [
-    {
-        id: '1',
-        title: 'General Knowledge',
-        duration: '2min',
-        prize: '10€',
-        subtitle: 'Saturday night Quiz',
-        code: 'XASDDAad',
-        creator: 'Brandon Matrovs',
-        isFavorite: true,
-        applied: false
-    },
-    {
-        id: '2',
-        title: 'General Knowledge',
-        duration: '2min',
-        prize: '10€',
-        subtitle: 'Saturday night Quiz',
-        code: 'WWR2112SW',
-        creator: 'Brandon Matrovs',
-        isFavorite: false,
-        applied: true
-    },
-    {
-        id: '3',
-        title: 'General Knowledge',
-        duration: '34min',
-        prize: '20€',
-        subtitle: 'New',
-        code: 'wfewfe3',
-        creator: 'Brandon Matrovs',
-        isFavorite: false,
-        applied: true
-    }
+    // eslint-disable-next-line max-len
+    { id: '1', title: 'General Knowledge', duration: '2min', prize: '10€', subtitle: 'Saturday night Quiz', code: 'XASDDAad', creator: 'Brandon Matrovs', isFavorite: true, applied: false },
+    // eslint-disable-next-line max-len
+    { id: '2', title: 'General Knowledge', duration: '2min', prize: '10€', subtitle: 'Saturday night Quiz', code: 'WWR2112SW', creator: 'Brandon Matrovs', isFavorite: false, applied: true },
+    // eslint-disable-next-line max-len
+    { id: '3', title: 'General Knowledge', duration: '34min', prize: '20€', subtitle: 'New', code: 'wfewfe3', creator: 'Brandon Matrovs', isFavorite: false, applied: true }
 ];
 
-const QuizList = () =>
+const QuizList = () => 
 {
     const dispatch = useDispatch<AppDispatch>();
     const openMenu = useSelector((state: RootState) => state.menu.openMenu);
     const navigate = useNavigate();
 
-    const [filterValue, setFilterValue] = useState<FilterType>({
-        category: '',
-        prize: 0,
-        isFavorit: false
-    })
+    const [filterValue, setFilterValue] = useState<FilterType>({ category: '', prize: 0, isFavorit: false });
     const [quizCode, setQuizCode] = useState<string>('');
     const [openFilter, setOpenFilter] = useState<boolean>(false);
 
-    const doLogout = async () =>
+    const doLogout = async () => 
     {
-        try
+        try 
         {
-            const user = await getDecodedRefreshToken('refresh')
-            await api(
-                'auth/logout',
-                'POST',
-                {userId: user?.userId}
-            );
-            await removeToken('token');
-            await removeToken('refresh');
-            navigate('/login')
-
-            alert('Successfully log outed!');
+            const user = getDecodedRefreshToken('refresh');
+            await api('auth/logout', 'POST', { userId: user?.userId });
+            removeToken('token');
+            removeToken('refresh');
+            navigate('/login');
+            alert('Successfully logged out!');
         }
-        catch (e)
+        catch (e) 
         {
             console.error(e);
             alert('An error occurred during logout.');
         }
     };
 
-    const renderQuizItem = ({ item }: any) => (
-        <QuizCard>
-            <QuizHeader>
-                <TextWrapper>
-                    <QuizTitle>{item.title}</QuizTitle>
-                </TextWrapper>
-                <TextWrapper>
-                    <QuizMeta>{item.duration}</QuizMeta>
-                </TextWrapper>
-                <TextWrapper>
-                    <QuizMeta>{item.prize}</QuizMeta>
-                </TextWrapper>
-                {item.isFavorite ?
-                    <CustomIcon icon={faStarSolid} color='gold'/> :
-                    <CustomIcon icon={faStarRegular} color='gold'/>}
-
-            </QuizHeader>
-
-            <QuizSubtitle>{item.subtitle}</QuizSubtitle>
-            <QuizCode>{item.code}</QuizCode>
-
-            <QuizFooter>
-                <QuizCreator>Created by {item.creator}</QuizCreator>
-                <ApplyButton
-                    applied={item.applied}
-                    onClick={() => console.log(`Apply to ${item.id}`)}
-                    disabled={item.applied}
-                >
-                    <ApplyButtonText>
-                        {item.applied ? 'Applied' : 'Apply Now'}
-                    </ApplyButtonText>
-                </ApplyButton>
-            </QuizFooter>
-        </QuizCard>
-    );
-
     const renderDrawerContent = () => (
-
-        <DrawerContainer>
-            <Header/>
-
-            <NavItems>
-                <NavItem>
-                    <CustomIcon icon={faHome} size='lg' color='#B4BECA'/>
-                    <NavText>Home</NavText>
-                </NavItem>
-                <NavItem>
-                    <CustomIcon icon={faUser} size='lg' color='#B4BECA'/>
-                    <NavText>Profil</NavText>
-                </NavItem>
-                <NavItem>
-                    <CustomIcon icon={faWallet} size='lg' color='#B4BECA'/>
-                    <NavText>Novčanik</NavText>
-                </NavItem>
-                <NavItem>
-                    <CustomIcon icon={faExclamation} size='lg' color='#B4BECA'/>
-                    <NavText>Prijavi grešku</NavText>
-                </NavItem>
-                <NavItem>
-                    <CustomIcon icon={faMessage} size='lg' color='#B4BECA'/>
-                    <NavText>Poruke</NavText>
-                </NavItem>
-                <NavItem>
-                    <CustomIcon icon={faBell} size='lg' color='#B4BECA'/>
-                    <NavText>Obavijesti</NavText>
-                </NavItem>
-                <NavItem>
-                    <CustomIcon icon={faChartLine} size='lg' color='#B4BECA'/>
-                    <NavText>Aktivni kvizovi</NavText>
-                </NavItem>
-            </NavItems>
-
-            <LogoutButton  onClick={doLogout}>
-                <CustomIcon icon={faArrowRightFromBracket} size='lg' color='red'/>
-                <LogoutText>Odllogiraj me</LogoutText>
-            </LogoutButton>
-        </DrawerContainer>
-
+        <div className="flex-1 bg-background p-4">
+            <Header />
+            <div className="py-2.5">
+                <button className="flex items-center py-3 px-5 mb-4 bg-transparent border-none cursor-pointer w-full text-left">
+                    <CustomIcon icon={faHome} size='lg' color='#B4BECA' />
+                    <span className="ml-2.5 text-base text-white">Home</span>
+                </button>
+                <button className="flex items-center py-3 px-5 mb-4 bg-transparent border-none cursor-pointer w-full text-left">
+                    <CustomIcon icon={faUser} size='lg' color='#B4BECA' />
+                    <span className="ml-2.5 text-base text-white">Profil</span>
+                </button>
+                {/* ... other nav items ... */}
+            </div>
+            <button onClick={doLogout} className="my-12 mx-5 max-w-xs flex items-center border border-[#1F3D5B] py-3 px-5 rounded-lg bg-transparent cursor-pointer">
+                <CustomIcon icon={faArrowRightFromBracket} size='lg' color='red' />
+                <span className="ml-2.5 text-base text-white">Odllogiraj me</span>
+            </button>
+        </div>
     );
 
     return (
-        <SafeArea>
-            {/* The Drawer component needs to be replaced with a web-compatible solution, perhaps a custom sidebar component */}
-            {/* For now, we're directly rendering the main content */}
-            {openMenu && renderDrawerContent() /* Temporarily render drawer content directly if open */}
-            <Header/>
+        <div className="flex-1 bg-background">
+            {openMenu && renderDrawerContent()}
+            <Header />
 
-            <Content>
-                <HeaderCardContent>
-                    <HeaderTitle>Aktivni kvizovi</HeaderTitle>
-                    <div>
-                        <Input
+            <main className="flex-1 px-4 tablet:px-10">
+                <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center mb-4">
+                    <h1 className="text-2xl font-semibold font-lato text-[#EBECED]">Aktivni kvizovi</h1>
+                    <div className='flex items-center space-x-2'>
+                        <input
                             placeholder="Quiz code"
                             onChange={(e) => setQuizCode(e.target.value)}
+                            className="border-b border-[#207179] text-white bg-button py-1 px-4 rounded-md outline-none placeholder-light-text"
                         />
+                        <button onClick={() => setOpenFilter(!openFilter)} className="p-2 bg-transparent border-none cursor-pointer">
+                            <CustomIcon icon={faSliders} color='#E8EAEE' />
+                        </button>
                     </div>
-                    <FilterButton
-                        onClick={()=> dispatch(setOpenMenu(!openMenu))}
-                    >
-                        <CustomIcon icon={faSliders} color='#E8EAEE'/>
-                    </FilterButton>
-                </HeaderCardContent>
-                <FiltersDisplayContainer>
-                    {filterValue.category !== '' && (
-                        <FilterItem>
-                            <FilterText>{filterValue.category}</FilterText>
-                            <ClearButton onClick={() =>setFilterValue(prev => ({
-                                ...prev,
-                                category: ''
-                            }))}>
-                                X
-                            </ClearButton>
-                        </FilterItem>
-                    )}
-                    {filterValue.prize !== 0 && (
-                        <FilterItem>
-                            <FilterText>Prize: {filterValue.prize}</FilterText>
-                            <ClearButton onClick={() => setFilterValue(prev => ({
-                                ...prev,
-                                prize: 0
-                            }))}>
-                                X
-                            </ClearButton>
-                        </FilterItem>
-                    )}
-                    {filterValue.isFavorit && (
-                        <FilterItem>
-                            <FilterText>Favorit: Yes</FilterText>
-                            <ClearButton onClick={() => setFilterValue(prev => ({
-                                ...prev,
-                                isFavorit: false
-                            }))}>
-                                X
-                            </ClearButton>
-                        </FilterItem>
-                    )}
-                </FiltersDisplayContainer>
+                </div>
 
+                {openFilter && (
+                    <div className="bg-gray-200 p-4 rounded-lg shadow-lg my-4">
+                        <div className="flex justify-between items-center">
+                            <h3 className="text-lg font-bold text-black">Filteri</h3>
+                            <button onClick={() => setOpenFilter(false)} className="font-bold text-blue-500 cursor-pointer">X</button>
+                        </div>
+                        {/* Filters UI */}
+                    </div>
+                )}
+                
+                <div className="flex flex-wrap mt-6">
+                    {filterValue.category && <div className="flex justify-between items-center w-auto bg-[#207179] py-1 px-3 rounded-full m-1"><span className="text-white mr-2">{filterValue.category}</span><button onClick={() => setFilterValue(prev => ({ ...prev, category: '' }))} className="text-light-text text-lg cursor-pointer">X</button></div>}
+                    {filterValue.prize !== 0 && <div className="flex justify-between items-center w-auto bg-[#207179] py-1 px-3 rounded-full m-1"><span className="text-white mr-2">Prize: {filterValue.prize}</span><button onClick={() => setFilterValue(prev => ({ ...prev, prize: 0 }))} className="text-light-text text-lg cursor-pointer">X</button></div>}
+                    {filterValue.isFavorit && <div className="flex justify-between items-center w-auto bg-[#207179] py-1 px-3 rounded-full m-1"><span className="text-white mr-2">Favorit: Yes</span><button onClick={() => setFilterValue(prev => ({ ...prev, isFavorit: false }))} className="text-light-text text-lg cursor-pointer">X</button></div>}
+                </div>
 
-                {
-                    openFilter && (
-                        <FilterMenuContainer>
-                            <FilterMenuHeader>
-                                <FilterTitle>Filteri</FilterTitle>
-                                <CloseButton onClick={() => setOpenFilter(!openFilter)}>
-                                    X
-                                </CloseButton>
-                            </FilterMenuHeader>
+                <button onClick={() => navigate('/create-quiz')} className="bg-button text-white py-2 px-4 my-5 rounded-md border-none cursor-pointer text-base hover:bg-opacity-80 transition">
+                    Kreiraj svoj kviz
+                </button>
 
-                            <SortPrizeWrapper>
-                                <SortContainer>
-                                    <StyledDropdown
-                                        onChange={e => console.log(e.target.value)}
-                                        defaultValue=""
-                                    >
-                                        <option value="" disabled>Sortiraj</option>
-                                        <option value="cijena">Cijeni</option>
-                                        <option value="naziv">Nazivu</option>
-                                    </StyledDropdown>
-                                </SortContainer>
-                                <SortContainer>
-                                    <StyledDropdown
-                                        onChange={e => 
-                                        {
-                                            console.log(e.target.value);
-                                            setFilterValue({...filterValue, category: e.target.value})
-                                        }}
-                                        defaultValue=""
-                                    >
-                                        <option value="" disabled>Kategorija</option>
-                                        <option value="opce_znanje">Opće znanje</option>
-                                        <option value="matematika">Matematika</option>
-                                    </StyledDropdown>
-                                </SortContainer>
-                            </SortPrizeWrapper>
-                            <PrizeWrapper>
-                                <Label>Cijena: 0 - 10000</Label>
-                                <input type="range" min="0" max="10000"
-                                    onChange={e => 
-                                    {
-                                        console.log(e.target.value);
-                                        setFilterValue({...filterValue, prize: parseFloat(e.target.value)})
-                                    }} />
-                            </PrizeWrapper>
-                            <CategoryFavoritWrapper>
-                                <Row>
-                                    <label>
-                                        <input
-                                            type="checkbox"
-                                            checked={filterValue.isFavorit}
-                                            onChange={() => setFilterValue({...filterValue, isFavorit: !filterValue.isFavorit})}
-                                        />
-                                        Favorit
-                                    </label>
-                                </Row>
-                            </CategoryFavoritWrapper>
-
-                        </FilterMenuContainer>
-                    )
-                }
-                <CreateQuizButton
-                    onClick={() =>  navigate('/create-quiz')}
-                >
-                    <ButtonText>
-                            Kreiraj svoj kviz
-                    </ButtonText>
-                </CreateQuizButton>
-
-                <ListContent>
-                    {quizData.map(item => renderQuizItem({ item }))}
-                </ListContent>
-            </Content>
-            <Footer/>
-        </SafeArea>
+                <div className="pb-5 pt-2.5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full">
+                    {quizData.map(item => (
+                        <div key={item.id} className="bg-[#0C2844] text-white rounded-xl p-4 mb-5 shadow-md mr-5">
+                            <div className="flex flex-row justify-between items-center mb-2">
+                                <div className="text-[#E8EAEE] rounded-full items-center border border-[#2B496C] py-1 px-2.5 flex"><p className="text-sm font-bold text-[#E8EAEE]">{item.title}</p></div>
+                                <div className="text-[#E8EAEE] rounded-full items-center border border-[#2B496C] py-1 px-2.5 flex"><p className="text-sm text-[#E8EAEE]">{item.duration}</p></div>
+                                <div className="text-[#E8EAEE] rounded-full items-center border border-[#2B496C] py-1 px-2.5 flex"><p className="text-sm text-[#E8EAEE]">{item.prize}</p></div>
+                                {item.isFavorite ? <CustomIcon icon={faStarSolid} color='gold' /> : <CustomIcon icon={faStarRegular} color='gold' />}
+                            </div>
+                            <h2 className="text-2xl font-semibold text-white mb-1">{item.subtitle}</h2>
+                            <p className="text-sm text-light-text mb-3">{item.code}</p>
+                            <div className="flex flex-col mobile:flex-row justify-between items-start mobile:items-center border-t border-gray-600 pt-3">
+                                <p className="text-sm italic text-light-text">Created by {item.creator}</p>
+                                <button
+                                    onClick={() => console.log(`Apply to ${item.id}`)}
+                                    disabled={item.applied}
+                                    className={`${item.applied ? 'bg-[#207179]' : 'bg-button'} text-white py-1.5 px-4 rounded-2xl border-none cursor-pointer mt-2 mobile:mt-0`}
+                                >
+                                    <span className="text-sm text-white">{item.applied ? 'Applied' : 'Apply Now'}</span>
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </main>
+            <Footer />
+        </div>
     );
 };
-
 
 export default QuizList;

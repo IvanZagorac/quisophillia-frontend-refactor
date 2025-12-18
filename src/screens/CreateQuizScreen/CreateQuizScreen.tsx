@@ -1,9 +1,8 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
-import { Container, Title, StepIndicator, Input, Label, StyledSelect, DatePickerContainer, Subtitle, Button, ButtonText, ProgressBarWrapper, ProgressBarBox } from './CreateQuizStyle';
-import StepProgress from './StepProgress'; // Will be converted separately
+import { useState } from 'react';
+import StepProgress from './StepProgress';
 
-export default function CreateQuizScreen()
+export default function CreateQuizScreen() 
 {
     const [step, setStep] = useState(1);
 
@@ -16,70 +15,70 @@ export default function CreateQuizScreen()
     const [startDate, setStartDate] = useState(new Date());
     const [currentCount, setCurrentCount] = useState<number>(0);
 
-    // Step 2 - question form
+    // Step 2
     const [questionType, setQuestionType] = useState('Pjesma');
     const [questionText, setQuestionText] = useState('');
     const [correctAnswer, setCorrectAnswer] = useState('');
     const [wrongAnswer, setWrongAnswer] = useState('');
 
-    const onNext = () =>
+    const onNext = () => 
     {
-        if (step < 3)
+        if (step < 3) 
         {
             setStep(step + 1);
         }
     };
 
+    const inputClasses = 'border-b border-[#00D4FF] text-white mb-4 pt-2 pb-2 bg-transparent outline-none w-full';
+    const labelClasses = 'text-[#AAA] mt-2.5 mb-1';
+
     return (
-        <Container>
-            <Title>Napravi novi kviz</Title>
-            <StepIndicator>
+        <div className="flex-1 bg-[#0B1633] p-5 tablet:p-10">
+            <h1 className="text-xl text-white mb-5 text-center">Napravi novi kviz</h1>
+            <div className="flex flex-row justify-around mb-5">
                 <StepProgress currentStep={step} onStepChange={setStep} />
-            </StepIndicator>
+            </div>
 
             {step === 1 && (
                 <>
-                    <Input type="text" placeholder="Cijena" value={price} onChange={(e) => setPrice(e.target.value)} />
-                    <Input type="text" placeholder="Trajanje" value={duration} onChange={(e) => setDuration(e.target.value)} />
-                    <Input type="text" placeholder="Pauza" value={pause} onChange={(e) => setPause(e.target.value)} />
-                    <Input type="text" placeholder="Kategorija" value={category} onChange={(e) => setCategory(e.target.value)} />
-                    <Input type="number" placeholder="Ukupno pitanja" value={totalQuestions} onChange={(e) => setTotalQuestions(e.target.value)} />
+                    <input type="text" placeholder="Cijena" value={price} onChange={(e) => setPrice(e.target.value)} className={inputClasses} />
+                    <input type="text" placeholder="Trajanje" value={duration} onChange={(e) => setDuration(e.target.value)} className={inputClasses} />
+                    <input type="text" placeholder="Pauza" value={pause} onChange={(e) => setPause(e.target.value)} className={inputClasses} />
+                    <input type="text" placeholder="Kategorija" value={category} onChange={(e) => setCategory(e.target.value)} className={inputClasses} />
+                    <input type="number" placeholder="Ukupno pitanja" value={totalQuestions} onChange={(e) => setTotalQuestions(e.target.value)} className={inputClasses} />
 
-                    <DatePickerContainer>
-                        <Label>Datum početka</Label>
-                        {/* <input type="datetime-local" value={startDate.toISOString().slice(0, 16)} onChange={(e) => setStartDate(new Date(e.target.value))} /> */}
-                    </DatePickerContainer>
+                    <div className="mt-2.5">
+                        <p className={labelClasses}>Datum početka</p>
+                        {/* Date picker implementation would go here */}
+                    </div>
                 </>
             )}
 
             {step === 2 && (
                 <>
-                    <ProgressBarWrapper>
-                        {Array.from({ length: parseInt(totalQuestions, 10) }).map((_, index) => (
-                            <ProgressBarBox
-                                key={index}
-                                filled={index < currentCount}
-                            />
+                    <div className="flex flex-row mt-2.5 flex-wrap gap-1">
+                        {Array.from({ length: parseInt(totalQuestions, 10) || 0 }).map((_, index) => (
+                            <div key={index} className={`w-2.5 h-2.5 m-0.5 rounded-sm ${index < currentCount ? 'bg-[#00D4AA] opacity-100' : 'bg-white opacity-50'}`}></div>
                         ))}
-                    </ProgressBarWrapper>
-                    <Subtitle>Pitanje 1</Subtitle>
+                    </div>
+                    <h2 className="text-lg text-white mb-2.5">Pitanje {currentCount + 1}</h2>
 
-                    <Label>Tip pitanja</Label>
-                    <StyledSelect value={questionType} onChange={(e) => setQuestionType(e.target.value)}>
+                    <p className={labelClasses}>Tip pitanja</p>
+                    <select value={questionType} onChange={(e) => setQuestionType(e.target.value)} className="bg-[#19294d] text-white mb-4 p-2 border border-[#19294d] rounded-md outline-none w-full">
                         <option value="Pjesma">Pjesma</option>
                         <option value="Tekst">Tekst</option>
                         <option value="Slika">Slika</option>
-                    </StyledSelect>
+                    </select>
 
-                    <Input type="text" placeholder="Pitanje" value={questionText} onChange={(e) => setQuestionText(e.target.value)} />
-                    <Input type="number" placeholder="Točan odgovor" value={correctAnswer} onChange={(e) => setCorrectAnswer(e.target.value)} />
-                    <Input type="number" placeholder="Netočan odgovor" value={wrongAnswer} onChange={(e) => setWrongAnswer(e.target.value)} />
+                    <input type="text" placeholder="Pitanje" value={questionText} onChange={(e) => setQuestionText(e.target.value)} className={inputClasses} />
+                    <input type="number" placeholder="Točan odgovor" value={correctAnswer} onChange={(e) => setCorrectAnswer(e.target.value)} className={inputClasses} />
+                    <input type="number" placeholder="Netočan odgovor" value={wrongAnswer} onChange={(e) => setWrongAnswer(e.target.value)} className={inputClasses} />
                 </>
             )}
 
-            <Button onClick={onNext}>
-                <ButtonText>Sljedeće</ButtonText>
-            </Button>
-        </Container>
+            <button onClick={onNext} className="bg-[#00D4FF] p-3 rounded-md mt-7 flex items-center justify-center border-none cursor-pointer w-full">
+                <span className="text-black font-bold">Sljedeće</span>
+            </button>
+        </div>
     );
 }

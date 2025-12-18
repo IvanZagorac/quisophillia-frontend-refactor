@@ -30,7 +30,7 @@ export default async function api(
         data: params,
         headers: {
             'Content-Type': contentType,
-            Authorization: await getToken('refresh'),
+            Authorization: getToken('refresh'),
         },
     };
     try 
