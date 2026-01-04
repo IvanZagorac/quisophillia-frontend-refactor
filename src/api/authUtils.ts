@@ -1,6 +1,6 @@
 import { jwtDecode}  from 'jwt-decode';
 type DecodedToken = {
-    userId?: string;
+    userId?: number;
     email?: string;
     exp?: number;
     [key: string]: any;

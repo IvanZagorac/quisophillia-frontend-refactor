@@ -1,8 +1,12 @@
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { jwtDecode } from 'jwt-decode';
 import api from '../../api/api';
 import { saveToken } from '../../api/authUtils';
+import { loginUser } from '../../store/user/userSlice';
+import { AppDispatch } from '../../store/store';
 
 const LoginScreen = () => 
 {
@@ -10,6 +14,7 @@ const LoginScreen = () =>
     const [password, setPassword] = useState<string>('');
     const [errors, setErrors] = useState<string>('');
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
 
     const doLogin = async () => 
     {
@@ -25,8 +30,17 @@ const LoginScreen = () =>
                 setErrors(response.data);
                 return;
             }
-            await saveToken(response.data.data.accessToken, 'token');
-            await saveToken(response.data.data.refreshToken, 'refresh');
+            await saveToken(response.data.accessToken, 'token');
+            await saveToken(response.data.refreshToken, 'refresh');
+
+            const decodedUser: any = jwtDecode(response.data.refreshToken);
+            console.log(decodedUser);
+            dispatch(loginUser({
+                userId: decodedUser.userId,
+                email: decodedUser.email,
+                username: decodedUser.username,
+            }));
+
             navigate('/home');
 
             setErrors('');

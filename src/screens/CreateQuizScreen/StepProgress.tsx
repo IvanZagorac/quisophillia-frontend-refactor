@@ -7,8 +7,9 @@ interface Props {
 }
 
 const StepProgress: React.FC<Props> = ({ currentStep, onStepChange }) => 
+    
 {
-    const steps = ['Osnovne informacije', 'Postavke', 'Postavi kviz'];
+    const steps = ['Osnovne informacije', 'Pitanja', 'Pregled'];
 
     return (
         <div className="flex flex-row items-center justify-between mt-5 mb-5 w-full">

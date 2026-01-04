@@ -1,10 +1,15 @@
 // redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
 import openMenuReducer from './openMenu/openMenuSlice';
+import categoriesReducer from './categories/categoriesSlice';
+
+import userReducer from './user/userSlice';
 
 export const store = configureStore({
     reducer: {
-        menu: openMenuReducer
+        menu: openMenuReducer,
+        categories: categoriesReducer,
+        user: userReducer,
     }
 });
 

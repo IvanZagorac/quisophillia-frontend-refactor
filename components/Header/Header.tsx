@@ -13,7 +13,7 @@ const Header = () =>
     const openMenu = useSelector((state: RootState) => state.menu.openMenu);
 
     return (
-        // eslint-disable-next-line max-len
+         
         <header className="w-full flex flex-row tablet:flex-row items-center py-4 tablet:py-6 bg-background mb-5 text-[#F5F5F5]">
             <div className="w-full tablet:w-9/12 flex tablet:flex-row p-2 tablet:p-5 items-center text-[#F5F5F5]">
                 <div className="w-1/5 flex mb-2.5 tablet:mb-0 pl-20">

@@ -56,8 +56,8 @@ export default async function api(
 function responseHandler(res: AxiosResponse): ApiResponse 
 {
     return {
+        ...res.data,
         status: 'ok',
-        data: res.data,
     };
 }
 

@@ -83,8 +83,8 @@ const RegisterScreen = () =>
             alert('Error: ' + response.data);
             return;
         }
-        await saveToken(response.data.data.accessToken, 'token');
-        await saveToken(response.data.data.refreshToken, 'refresh');
+        await saveToken(response.data.accessToken, 'token');
+        await saveToken(response.data.refreshToken, 'refresh');
 
         navigate('/home');
 
